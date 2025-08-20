@@ -11,52 +11,92 @@ public class Ship {
         this.name = name;
     }
     
-    public ArrayList<String> findSquares(String start, String end, String direction){
 
-    //A1 A5 rigth 
-    char row = start.charAt(0);
-    int colum = Integer.parseInt(start.substring(1));
-    String  maker = "";
-    //A1 A2 A3 A4 A5
-    ArrayList<String> list = new ArrayList<>();
 
-    if(direction.equalsIgnoreCase("horizontal")){
-        //Only numbers will change
-        int i = 0;
-       while(!maker.equals(end)){
-        maker = ""+ row + (colum+i) ;
-        list.add(maker);
-        i++;
-       }
+
+    // GETTERS
+    public String getName() {
+        return name;
     }
 
-    else{
 
-    //only chars will be change
-        int i = 0;
+
+    public ArrayList<String> getCoordinates() {
+        return coordinates;
+    }
+
+    //SETTERS
+
+
+    public void setCoordinates(ArrayList<String> coordinates){
+
+        this.coordinates = coordinates;
+    }
+
+
+
+    public static ArrayList<String> findSquares(String start, String end, String direction){
+
+        //A1 A5 rigth 
+        char row = start.charAt(0);
+        int colum = Integer.parseInt(start.substring(1));
+        String  maker = "";
+        //A1 A2 A3 A4 A5
+        ArrayList<String> list = new ArrayList<>();
+
+        if(direction.equalsIgnoreCase("horizontal")){
+            //Only numbers will change
+            int i = 0;
         while(!maker.equals(end)){
-            maker = (char)((int)row + i) + colum+"";
+            maker = ""+ row + (colum+i) ;
             list.add(maker);
             i++;
         }
+        }
+
+        else{
+
+        //only chars will be change
+            int i = 0;
+            while(!maker.equals(end)){
+                maker = (char)((int)row + i) + colum+"";
+                list.add(maker);
+                i++;
+            }
 
 
+
+
+        }
+        return list;
 
 
     }
-    return list;
 
+    public static boolean isInBoundary(String start, String last){
 
+        char row = start.charAt(0);
+        int colum = Integer.parseInt(start.substring(1));
+        
+        if(row > 'J' || colum > 10){
+            return false;
+        }
+
+        else 
+        return true;
 
     }
+
+
+
 
 
     /* PREPARATION PHASE
     Oyuncu gemilerinin yerlerini sececek:
-    Gemi, baslangic ve bitis konumlarini yazacak.   Ornek input = 
+    Gemi, baslangic ve bitis konumlarini yazacak.   Ornek input = A2 A5 horizontal ya da horizontali bulucak bir metod yazilablir
     Baslangic ve bitis konumundan geminin uzanacagi yatay veya dikey sirayi bulucak ====> findSquares()
     Verilen baslangic, bitis ve gemi isimleri ile istenen araliga gemi eklencek ====> placeShip()
-    Gemilerin ust uste gelmemesini ve harita disina cikmamalarini saglayacak ===> IsLegal()
+    Gemilerin ust uste gelmemesini ve harita disina cikmamalarini saglayacak ===> IsLegal()Placement
 
 
     Yerlestirme basarili ise 
