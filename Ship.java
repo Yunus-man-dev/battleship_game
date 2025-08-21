@@ -1,73 +1,149 @@
-package battleship_game;
+import java.util.ArrayList;
 
 public class Ship {
-    private int length;
-    private String startRow;
-    private String finishRow;
-    private int startColum;
-    private int finishColum;
+   
+    private String name;
+    private ArrayList<String> coordinates = new ArrayList<>();
+
 
     //constructor
-    public Ship(int length,String startRow,String finishRow, int startColum, int finishColum){
-        this.length=length;
-        this.startRow=startRow;
-        this.finishRow=finishRow;
-        this.startColum= startColum;
-        this.finishColum=finishColum;
+    public Ship(String name){
+        this.name = name;
     }
-    //getters 
-    public int getLength(){
-        return this.length;
-    }
-    public String getStartRow(){
-        return startRow;
-    }
-    public String getFinishRow(){
-        return finishRow;
-    }
-    public int getStartColum(){
-        return startColum;
-    }
-    public int getFinishColum(){
-        return finishColum;
-    }
-
-    //setters
-
-
-    /*    functions
-
-    - showMap ==> shows the map and ships locations. The blocks that is shot and there is a ship should be marked as O and blocks 
-    that is shot but there are not any ships should be marked as X. One of them should show your own map and the other one should
-    not show the enemy ships
-
-    - isShot ==> return true if that spot is shot 
-    - isHit ==> return true if there is a ship in the shot location
-
     
 
-    */
-    public void showMap(){
 
-        System.out.println("    1 2 3 4 5 6 7 8 9 10");
-        String show="";
-        for(int i =0; i<10; i++){
-            char ch = (char) (65+i);
-            show= ch+"  ";
-            for(int j=0; j<10; j++){
+
+    // GETTERS
+    public String getName() {
+        return name;
+    }
 
 
 
-            }
+    public ArrayList<String> getCoordinates() {
+        return coordinates;
+    }
+
+    //SETTERS
+
+
+    public void setCoordinates(ArrayList<String> coordinates){
+
+        this.coordinates = coordinates;
+    }
+
+
+
+    public static ArrayList<String> findSquares(String start, String end, String direction){
+
+        //A1 A5 rigth 
+        char row = start.charAt(0);
+        int colum = Integer.parseInt(start.substring(1));
+        String  maker = "";
+        //A1 A2 A3 A4 A5
+        ArrayList<String> list = new ArrayList<>();
+
+        if(direction.equalsIgnoreCase("horizontal")){
+            //Only numbers will change
+            int i = 0;
+        while(!maker.equals(end)){
+            maker = ""+ row + (colum+i) ;
+            list.add(maker);
+            i++;
+        }
         }
 
+        else{
+
+        //only chars will be change
+            int i = 0;
+            while(!maker.equals(end)){
+                maker = ((char)(row + i))+"" + colum+"";
+                list.add(maker);
+                i++;
+            }
+
+
+
+
+        }
+        return list;
+
 
     }
 
-    // public boolean isShot(){
+    public static boolean isInBoundary(String start, String last){
 
-    // }
+        char row = start.charAt(0);
+        int colum = Integer.parseInt(start.substring(1));
+        
+        char lastrow = last.charAt(0);
+        int lstcolum = Integer.parseInt(last.substring(1));
+
+        if((row > 'J' || colum > 10) || (lastrow>'J' || lstcolum>10) ){
+            return false;
+        }
+
+        else 
+        return true;
+
+    }
+
+
+
+
+
+    /* PREPARATION PHASE
+    Oyuncu gemilerinin yerlerini sececek:
+    Gemi, baslangic ve bitis konumlarini yazacak.   Ornek input = A2 A5 horizontal ya da horizontali bulucak bir metod yazilablir
+    Baslangic ve bitis konumundan geminin uzanacagi yatay veya dikey sirayi bulucak ====> findSquares()
+    Verilen baslangic, bitis ve gemi isimleri ile istenen araliga gemi eklencek ====> placeShip()
+    Gemilerin ust uste gelmemesini ve harita disina cikmamalarini saglayacak ===> IsLegal()Placement
+
+
+    Yerlestirme basarili ise 
+    Her bir yerlestirmeden sonra tum gemilerin yerlesip yerlesmedigini kontrol edecek ==> IsShipsSealed()
+    Yerlestirildi ise olusan haritayi gosterecek ==> showMap()
+    Kalan gemilerin isimleirni gosterecek 
+
+    Bunlar gemiler bitene kadar devam edecek
+
+    Eger bir geminin yerini degistirmek istiyorsa ==> editShip() verilen gemiyi ve ona ait olan koordiantlari silicek
+
+    Eger yerlestirme isi bitti ise ==> startGame()
+
+
+    */
+
+
+    /* GAME PHASE
+
+    turun kimde oldugunu gosteren bir method ====> whoseTurn()
+
+    Makine, sira kendisine geldiginde bilinen konumlardan rastgele bir tanesini sececek ve vurucak ====> attacByMachine()
+    Bir atisin gemiyi vurup vurmadigini soyleyecek isShot( turnun kimde olduguna gore mape bakmasi lazim)
+    Vurduysa tur karsiya gecmeyecek, bir kez daha vurucak.
+    Vurulan konumlar bu listeden cikarilicak.
+
+    oyuncu vurulabilcek konumdan birisni sececek ve vurucak
+    Konum vurulabilir mi? daha once vurulmus mu veya haritanin sinirlari icerisinde mi ? ====> isLegal()
+    isShot()
+    Vurduysa tur karsiya gecmeyecek, bir kez daha vurucak.
+
+    Her tur bitiminde harita gosterilicek. showMap()
+    her bir tur bitiminde rakibin bir gemisinin kalip kalmadigini sorgulayacak ====> isGameOver()
+ 
     
+
+    
+     */
+
+
+    
+
+
+
 
 
 
